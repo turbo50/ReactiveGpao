@@ -5,7 +5,6 @@
  */
 package com.sdcc.gpao.entity;
 
-import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
 
@@ -15,10 +14,10 @@ import org.springframework.data.annotation.Id;
  *
  * @author Sodecoton
  */
-public class Usine implements Serializable {
+public class Usine  {
 
-    private static final long serialVersionUID = 1L;
-    @Id
+
+	@Id
     private Integer Id_usine;
     private String Nom_usine;
     private String Code_usine;
@@ -29,6 +28,17 @@ public class Usine implements Serializable {
 	public Usine() {
 		super();
 	}
+	
+	
+
+
+	public Usine(String nom_usine, String code_usine) {
+		super();
+		Nom_usine = nom_usine;
+		Code_usine = code_usine;
+	}
+
+
 
 
 	public Usine(Integer id_usine, String nom_usine, String code_usine) {
@@ -66,6 +76,14 @@ public class Usine implements Serializable {
 
 	public void setCode_usine(String code_usine) {
 		Code_usine = code_usine;
+	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "Usine [Id_usine=" + Id_usine + ", Nom_usine=" + Nom_usine + ", Code_usine=" + Code_usine + "]";
 	}
 
     
