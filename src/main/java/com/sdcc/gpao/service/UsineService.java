@@ -10,7 +10,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-public class UsineService implements IBaseService<Usine, Integer>{
+public class UsineService  implements IBaseService<Usine, Integer>{
 	
 	private IUsineRepository usineRepository;
 	
@@ -28,23 +28,17 @@ public class UsineService implements IBaseService<Usine, Integer>{
 	}
 
 	@Override
-	public Mono<Usine> getElement(Integer id)  {
+	public Mono<Usine> getElement(Integer id) /*throws ResourceNotFoundException */{
 		return this.usineRepository.findById(id);
 	}
 
 	@Override
-	public Mono<Usine> ajouter(final Usine t)  {
-		//Mono<Usine> usineDb = usineRepository.findByNom_usine(t.getNom_usine());
-		//if(usineDb.block() == null) {
-			return usineRepository.save(t);
-			//return null;
-		/*}else {
-			throw new NoDuplicationException("Cette usine existe déjà");
-		}*/
+	public Mono<Usine> ajouter(final Usine t) {
+		return usineRepository.save(t);
 	}
 
 	@Override
-	public Mono<Usine> modifier(Integer v, Mono<Usine> t) {
+	public Mono<Usine> modifier(Integer v, Mono<Usine> t) /*throws ResourceNotFoundException*/ {
 		return usineRepository.findById(v).
 				flatMap( us -> t.map( usine ->{
 					us.setId_usine(usine.getId_usine());
@@ -56,12 +50,12 @@ public class UsineService implements IBaseService<Usine, Integer>{
 	}
 
 	@Override
-	public Mono<Void> supprimer(Integer v)  {
+	public Mono<Void> supprimer(Integer v) /*throws ResourceNotFoundException*/ {
 		//Mono<Usine> usineDb = usineRepository.findById(v);
 		//if(usineDb.block() != null) {
 			return usineRepository.deleteById(v);
 		//}else {
-			//throw new ResourceNotFoundException("Cette usine n'existe pas");
+		//	throw new ResourceNotFoundException("Cette usine n'existe pas");
 		//}
 	}
 	

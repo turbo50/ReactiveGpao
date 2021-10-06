@@ -32,7 +32,7 @@ public class UsineController {
 	}
 	
 	@GetMapping("/liste/{id}")
-	public Mono<ResponseEntity<Usine>> getElement(@PathVariable(value = "id") int id) throws Exception {
+	public Mono<ResponseEntity<Usine>> getElement(@PathVariable(value = "id") int id) {
 	    return usineService.getElement(id)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
@@ -46,9 +46,8 @@ public class UsineController {
 	}
 	
 	@PostMapping("/ajouter")
-    public Mono<Usine> ajouter(@RequestBody Usine usineMono){
-        return usineService.ajouter(usineMono);
-		//return usineMono.flatMap(this.usineService::ajouter);
+    public Mono<Usine> ajouter(@RequestBody Mono<Usine> usineMono){
+		return usineMono.flatMap(this.usineService::ajouter);
     }
 	
 	@PutMapping("/modifier/{id}")
